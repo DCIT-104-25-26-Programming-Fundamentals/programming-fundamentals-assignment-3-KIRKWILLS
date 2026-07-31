@@ -49,9 +49,79 @@
 // - Each part must be implemented in its own function (see scaffold below).
 //
 
-//
-// =============================================================================
-// YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
-// =============================================================================
+const readlineSync = require('readline-sync');
+
+function generateFibonacciTerms(n) {
+    if (n <= 0) {
+        return [];
+    }
+
+    const terms = [0];
+    if (n === 1) {
+        return terms;
+    }
+
+    terms.push(1);
+    for (let i = 2; i < n; i++) {
+        const nextValue = terms[i - 1] + terms[i - 2];
+        terms.push(nextValue);
+    }
+    return terms;
+}
+
+function printFibonacciSequence(n) {
+    if (n <= 0) {
+        console.log('Error: N must be a positive integer.');
+        return;
+    }
+
+    const terms = generateFibonacciTerms(n);
+    console.log(`Fibonacci sequence: ${terms.join(' ')}`);
+}
+
+function isFibonacciNumber(number) {
+    if (number < 0) {
+        return false;
+    }
+
+    let previous = 0;
+    let current = 1;
+    while (current <= number) {
+        if (current === number) {
+            return true;
+        }
+        const nextValue = previous + current;
+        previous = current;
+        current = nextValue;
+    }
+
+    return false;
+}
+
+function main() {
+    console.log('1. Print first N terms');
+    console.log('2. Check if a number is Fibonacci');
+    console.log('3. Quit');
+    const choice = readlineSync.questionInt('Select an option (1-3): ');
+
+    if (choice === 1) {
+        const n = readlineSync.questionInt('How many terms? ');
+        printFibonacciSequence(n);
+    } else if (choice === 2) {
+        const number = readlineSync.questionInt('Enter a number to check: ');
+        const result = isFibonacciNumber(number);
+        if (result) {
+            console.log(`${number} is a Fibonacci number.`);
+        } else {
+            console.log(`${number} is NOT a Fibonacci number.`);
+        }
+    } else if (choice === 3) {
+        console.log('Goodbye!');
+    } else {
+        console.log('Invalid option.');
+    }
+}
+
+main();
 
 
